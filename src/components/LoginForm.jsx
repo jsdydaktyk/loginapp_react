@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 
 
@@ -6,11 +7,18 @@ import axios from "axios"
 const LoginForm = () => {
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
+    const navigate = useNavigate(); 
 
     function handleSubmit(e){
         e.preventDefault()
 
         console.log(`${userName}, ${password}`)
+        if(userName == "tom" && password==="123"){
+            navigate("/welcome", {state: {userName, password}})
+        } else {
+            setError("Invalid user name or password")
+        }
 
     }
 
@@ -36,6 +44,7 @@ const LoginForm = () => {
                         required
                     />
                 </div>
+                {error && <p style={{color: 'red'}}>{error}</p>}
                 <button type="submit"> Login </button>
             </form>
         
